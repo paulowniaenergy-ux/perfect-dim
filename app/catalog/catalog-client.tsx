@@ -34,7 +34,7 @@ export function CatalogClient() {
 
   return (
     <section className="min-h-[70vh] bg-[#f6f1e8] py-12 lg:py-20"><div className="pd-container">
-      <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end"><div><p className="pd-eyebrow">Каталог Perfect Dim</p><h1 className="mt-4 text-5xl leading-none text-[#173326] sm:text-7xl">Будинки біля Луцька</h1></div><p className="max-w-md text-sm leading-6 text-[#647368]">Добірні об’єкти для життя поруч із містом. Продані будинки залишаються видимими як портфоліо успішних угод.</p></div>
+      <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end"><div><p className="pd-eyebrow">Каталог</p><h1 className="mt-4 text-5xl leading-none text-[#173326] sm:text-7xl">Будинки біля Луцька</h1></div><p className="max-w-md text-sm leading-6 text-[#647368]">Актуальні та продані будинки з ціною, площею, ділянкою, статусом і відстанню до Луцька.</p></div>
       <div className="mt-10 border-y border-[#173326]/12 py-5">
         <div className="mb-4 flex items-center justify-between"><span className="flex items-center gap-2 text-sm font-semibold text-[#173326]"><SlidersHorizontal className="size-4" /> Фільтри</span>{active && <Button variant="ghost" size="sm" className="rounded-none text-[#8b413a]" onClick={() => setFilters(initial)}><X className="size-3.5" /> Очистити</Button>}</div>
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
