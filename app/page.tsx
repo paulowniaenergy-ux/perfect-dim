@@ -2,11 +2,14 @@ import { ArrowRight, Check, MapPin, Phone, Search, ShieldCheck, Sparkles } from 
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { PropertyCard } from '@/components/property-card';
-import { properties } from '@/lib/properties';
+import { getFeaturedProperties, getSoldProperties } from '@/lib/properties-repository';
 
-export default function Home() {
-  const featured = properties.filter((property) => property.featured && property.status !== 'sold').slice(0, 3);
-  const sold = properties.filter((property) => property.status === 'sold').slice(0, 2);
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+  const [featuredResult, soldResult] = await Promise.all([getFeaturedProperties(), getSoldProperties()]);
+  const featured = featuredResult.ok ? featuredResult.data : [];
+  const sold = soldResult.ok ? soldResult.data : [];
   return (
     <main className="min-h-screen bg-[#f6f1e8]">
       <section className="relative min-h-[760px] overflow-hidden bg-[#173326] bg-cover bg-center text-white" style={{ backgroundImage: "url('/property-hero.png')" }}>
@@ -33,7 +36,7 @@ export default function Home() {
           <div><p className="pd-eyebrow">Актуальні пропозиції</p><h2 className="mt-4 max-w-2xl text-4xl leading-tight text-[#173326] sm:text-5xl">Будинки, доступні для перегляду</h2></div>
           <a href="/catalog" className="inline-flex items-center gap-2 text-sm font-semibold text-[#173326] underline decoration-[#b99751] underline-offset-8">Увесь каталог <ArrowRight className="size-4" /></a>
         </div>
-        <div className="grid gap-6 lg:grid-cols-3">{featured.map((property) => <PropertyCard key={property.id} property={property} />)}</div>
+        {featured.length > 0 ? <div className="grid gap-6 lg:grid-cols-3">{featured.map((property) => <PropertyCard key={property.id} property={property} />)}</div> : <DataUnavailable message={featuredResult.ok ? 'Опублікованих рекомендованих об’єктів поки немає.' : featuredResult.message} />}
       </section>
 
       <section className="bg-[#173326] py-20 text-white lg:py-28">
@@ -50,7 +53,7 @@ export default function Home() {
       <section className="pd-container py-20 lg:py-28">
         <div className="grid gap-10 lg:grid-cols-[.65fr_1.35fr]">
           <div><p className="pd-eyebrow">Продані об’єкти</p><h2 className="mt-4 text-4xl leading-tight text-[#173326] sm:text-5xl">Будинки, які вже знайшли покупців</h2><p className="mt-5 max-w-sm leading-7 text-[#647368]">Не прибираємо їх із каталогу: так можна побачити реальні типи будинків, локації та ціновий діапазон наших угод.</p><div className="mt-8 space-y-3 text-sm text-[#52665a]">{['Оцінка ціни на основі ринкових аналогів', 'Фото, характеристики та зрозумілий опис', 'Переговори й перевірка документів'].map((item) => <p key={item} className="flex gap-2"><Check className="size-4 text-[#b99751]" /> {item}</p>)}</div></div>
-          <div className="grid gap-6 sm:grid-cols-2">{sold.map((property) => <PropertyCard key={property.id} property={property} />)}</div>
+          {sold.length > 0 ? <div className="grid gap-6 sm:grid-cols-2">{sold.map((property) => <PropertyCard key={property.id} property={property} />)}</div> : <DataUnavailable message={soldResult.ok ? 'Опублікованих проданих об’єктів поки немає.' : soldResult.message} />}
         </div>
       </section>
 
@@ -58,4 +61,8 @@ export default function Home() {
       <SiteFooter />
     </main>
   );
+}
+
+function DataUnavailable({ message }: { message: string }) {
+  return <div className="grid min-h-56 place-items-center border border-[#173326]/10 bg-white/35 px-6 text-center text-sm leading-6 text-[#647368]">{message}</div>;
 }

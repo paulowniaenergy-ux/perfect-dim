@@ -1,26 +1,18 @@
 'use client';
 
-import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
+import { useMemo, useState, type ChangeEvent } from 'react';
 import { SlidersHorizontal, X } from 'lucide-react';
 import { PropertyCard } from '@/components/property-card';
 import { Button } from '@/components/ui/button';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
-import { loadProperties } from '@/lib/property-store';
-import { locations, type Property } from '@/lib/properties';
+import type { Property } from '@/lib/property-types';
 
 const initial = { location: 'all', maxPrice: 'all', minArea: 'all', rooms: 'all', minLand: 'all' };
 
-export function CatalogClient() {
-  const [items, setItems] = useState<Property[]>([]);
+export function CatalogClient({ initialItems, unavailableMessage = '' }: { initialItems: Property[]; unavailableMessage?: string }) {
+  const items = initialItems;
   const [filters, setFilters] = useState(initial);
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    const sync = () => { setItems(loadProperties()); setReady(true); };
-    sync();
-    window.addEventListener('storage', sync);
-    window.addEventListener('perfect-dim-properties-updated', sync);
-    return () => { window.removeEventListener('storage', sync); window.removeEventListener('perfect-dim-properties-updated', sync); };
-  }, []);
+  const locations = useMemo(() => [...new Set(items.map((property) => property.location))].sort(), [items]);
   const filtered = useMemo(() => items.filter((property) => {
     if (filters.location !== 'all' && property.location !== filters.location) return false;
     if (filters.maxPrice !== 'all' && property.price > Number(filters.maxPrice)) return false;
@@ -45,8 +37,9 @@ export function CatalogClient() {
           <FilterSelect label="Ділянка від" value={filters.minLand} onChange={update('minLand')} options={[[8, '8 соток'], [10, '10 соток'], [12, '12 соток'], [15, '15 соток']]} />
         </div>
       </div>
-      <div className="mt-8 flex items-center justify-between text-sm text-[#647368]"><p>{ready ? `Знайдено: ${filtered.length}` : 'Завантаження…'}</p><p className="hidden sm:block">Спочатку рекомендовані</p></div>
-      {ready && filtered.length > 0 ? <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">{filtered.map((property) => <PropertyCard key={property.id} property={property} />)}</div> : ready ? <div className="mt-6 grid min-h-80 place-items-center border border-[#173326]/10 bg-white/40 text-center"><div><h2 className="text-3xl text-[#173326]">Нічого не знайдено</h2><p className="mt-2 text-sm text-[#647368]">Спробуйте змінити один або кілька фільтрів.</p><Button className="mt-5 rounded-none bg-[#173326]" onClick={() => setFilters(initial)}>Показати всі</Button></div></div> : null}
+      {unavailableMessage && <div className="mt-8 border border-[#b99751]/35 bg-[#fffdf8] px-5 py-4 text-sm text-[#647368]"><strong className="block text-[#173326]">Каталог тимчасово недоступний</strong><span className="mt-1 block">{unavailableMessage}</span></div>}
+      <div className="mt-8 flex items-center justify-between text-sm text-[#647368]"><p>Знайдено: {filtered.length}</p><p className="hidden sm:block">Спочатку рекомендовані</p></div>
+      {filtered.length > 0 ? <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">{filtered.map((property) => <PropertyCard key={property.id} property={property} />)}</div> : <div className="mt-6 grid min-h-80 place-items-center border border-[#173326]/10 bg-white/40 text-center"><div><h2 className="text-3xl text-[#173326]">{unavailableMessage ? 'Об’єкти з’являться після підключення бази' : 'Нічого не знайдено'}</h2><p className="mt-2 text-sm text-[#647368]">{unavailableMessage ? 'Налаштування не впливає на інші сторінки сайту.' : 'Спробуйте змінити один або кілька фільтрів.'}</p>{!unavailableMessage && <Button className="mt-5 rounded-none bg-[#173326]" onClick={() => setFilters(initial)}>Показати всі</Button>}</div></div>}
     </div></section>
   );
 }
