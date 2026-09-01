@@ -7,6 +7,23 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function AdminLoginPage() {
-  return <LoginClient configured={Boolean(getSupabaseConfig())} />;
+type Props = {
+  searchParams: Promise<{ error?: string; reset?: string }>;
+};
+
+export default async function AdminLoginPage({ searchParams }: Props) {
+  const params = await searchParams;
+  const initialMessage =
+    params.reset === 'success'
+      ? 'Пароль оновлено. Тепер увійдіть із новим паролем.'
+      : params.error === 'forbidden'
+        ? 'Цей обліковий запис не має доступу до адмінки.'
+        : '';
+
+  return (
+    <LoginClient
+      configured={Boolean(getSupabaseConfig())}
+      initialMessage={initialMessage}
+    />
+  );
 }
