@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createClient } from '@/lib/supabase/client';
+import { requestPasswordRecovery } from '@/lib/supabase/password-recovery';
 
 export function LoginClient({
   configured,
@@ -47,13 +48,11 @@ export function LoginClient({
     setMessage('');
 
     try {
-      const redirectTo = new URL(
-        '/admin/reset-password',
+      const { error } = await requestPasswordRecovery(
+        createClient(),
+        email,
         window.location.origin,
-      ).toString();
-      const { error } = await createClient().auth.resetPasswordForEmail(email, {
-        redirectTo,
-      });
+      );
       if (error) throw error;
       setMessage(
         'Якщо цей email належить адміністратору, на нього надіслано посилання для зміни пароля.',

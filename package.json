@@ -10,6 +10,7 @@
     "build": "vinext build",
     "build:vercel": "vite build",
     "start": "wrangler dev --config dist/server/wrangler.json",
+    "test:auth": "node --experimental-strip-types --test tests/password-recovery.test.ts",
     "lint": "oxlint",
     "format": "oxfmt",
     "db:generate": "drizzle-kit generate"
