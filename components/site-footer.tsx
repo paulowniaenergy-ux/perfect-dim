@@ -10,7 +10,7 @@ export function SiteFooter() {
             <Brand light />
           </a>
           <p className="mt-5 max-w-md text-sm leading-6 text-white/56">
-            Агенція добірної заміської нерухомості. Допомагаємо знайти дім біля Луцька без зайвого шуму та сумнівів.
+            Проєктуємо та будуємо будинки й дуплекси біля Луцька. Пояснюємо комплектацію, показуємо етапи й тримаємо відповідальність в одній команді.
           </p>
         </div>
         <div className="grid content-start gap-3 text-sm text-white/65">

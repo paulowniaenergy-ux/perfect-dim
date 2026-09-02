@@ -17,15 +17,15 @@ export default async function Home() {
         <div className="relative z-10"><SiteHeader inverted /></div>
         <div className="pd-container relative z-10 flex min-h-[660px] items-center pb-16 pt-10">
           <div className="max-w-[760px]">
-            <p className="pd-eyebrow mb-7">Продаж будинків біля Луцька</p>
-            <h1 className="max-w-[720px] text-5xl leading-[.98] tracking-[-0.035em] sm:text-7xl lg:text-[96px]">Будинки, які можна перевірити й переглянути</h1>
-            <p className="mt-8 max-w-[570px] text-base leading-7 text-white/72 sm:text-lg">У каталозі є ціна, площа, ділянка, статус і відстань до Луцька. Перед завдатком перевіряємо документи та пояснюємо умови угоди.</p>
+            <p className="pd-eyebrow mb-7">Забудовник · Луцький район</p>
+            <h1 className="max-w-[720px] text-5xl leading-[.98] tracking-[-0.035em] sm:text-7xl lg:text-[96px]">Будинки, у яких важлива не лише фасадна лінія</h1>
+            <p className="mt-8 max-w-[570px] text-base leading-7 text-white/72 sm:text-lg">Проєктуємо, будуємо й показуємо комплектацію без дрібного шрифту: конструктив, утеплення, комунікації та готовність кожного будинку.</p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <a href="/catalog" className="inline-flex h-14 items-center justify-center gap-3 bg-[#c3a567] px-7 text-sm font-semibold text-[#173326] transition hover:bg-[#d4ba82]">Перейти до каталогу <ArrowRight className="size-4" /></a>
-              <a href="/contacts" className="inline-flex h-14 items-center justify-center gap-3 border border-white/25 px-7 text-sm font-semibold transition hover:border-white/60">Обговорити пошук</a>
+              <a href="/contacts" className="inline-flex h-14 items-center justify-center gap-3 border border-white/25 px-7 text-sm font-semibold transition hover:border-white/60">Запланувати огляд</a>
             </div>
             <div className="mt-16 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/15 pt-6 text-sm text-white/58">
-              <span className="flex items-center gap-2"><MapPin className="size-4 text-[#c3a567]" /> До 25 км від Луцька</span><span>20 демонстраційних пропозицій</span><span>Перевірені документи</span>
+              <span className="flex items-center gap-2"><MapPin className="size-4 text-[#c3a567]" /> До 25 км від Луцька</span><span>Будинки та дуплекси</span><span>Відкрита комплектація</span>
             </div>
           </div>
         </div>
@@ -33,7 +33,7 @@ export default async function Home() {
 
       <section className="pd-container py-20 lg:py-28">
         <div className="mb-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-          <div><p className="pd-eyebrow">Актуальні пропозиції</p><h2 className="mt-4 max-w-2xl text-4xl leading-tight text-[#173326] sm:text-5xl">Будинки, доступні для перегляду</h2></div>
+          <div><p className="pd-eyebrow">Будуємо зараз</p><h2 className="mt-4 max-w-2xl text-4xl leading-tight text-[#173326] sm:text-5xl">Проєкти, які можна побачити на ділянці</h2></div>
           <a href="/catalog" className="inline-flex items-center gap-2 text-sm font-semibold text-[#173326] underline decoration-[#b99751] underline-offset-8">Увесь каталог <ArrowRight className="size-4" /></a>
         </div>
         {featured.length > 0 ? <div className="grid gap-6 lg:grid-cols-3">{featured.map((property) => <PropertyCard key={property.id} property={property} />)}</div> : <DataUnavailable message={featuredResult.ok ? 'Опублікованих рекомендованих об’єктів поки немає.' : featuredResult.message} />}
@@ -41,9 +41,9 @@ export default async function Home() {
 
       <section className="bg-[#173326] py-20 text-white lg:py-28">
         <div className="pd-container grid gap-14 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
-          <div><p className="pd-eyebrow">Як відбираємо</p><h2 className="mt-5 text-4xl leading-tight sm:text-6xl">Відсіюємо невідповідні варіанти до перегляду</h2><p className="mt-6 max-w-lg leading-7 text-white/62">Звіряємо бюджет, площу, ділянку, стан ремонту й маршрут до Луцька. На перегляд залишаємо будинки, що відповідають цим критеріям.</p><a href="/about" className="mt-8 inline-flex items-center gap-2 border-b border-[#c3a567] pb-2 text-sm font-semibold text-[#d7bd87]">Як ми працюємо <ArrowRight className="size-4" /></a></div>
+          <div><p className="pd-eyebrow">Підхід Perfect Dim</p><h2 className="mt-5 text-4xl leading-tight sm:text-6xl">Від ділянки до ключів — одна команда</h2><p className="mt-6 max-w-lg leading-7 text-white/62">Починаємо з планування та інженерії, контролюємо ключові етапи будівництва і передаємо будинок із зафіксованою комплектацією.</p><a href="/about" className="mt-8 inline-flex items-center gap-2 border-b border-[#c3a567] pb-2 text-sm font-semibold text-[#d7bd87]">Про підхід <ArrowRight className="size-4" /></a></div>
           <div className="grid gap-px bg-white/12 sm:grid-cols-3">
-            {[[ShieldCheck, 'Юридична перевірка', 'Аналізуємо право власності, землю та обмеження до завдатку.'], [Search, 'Точний відбір', 'Економимо ваш час і показуємо лише релевантні варіанти.'], [Sparkles, 'Супровід до ключів', 'Переговори, документи й фінальна передача — в одних руках.']].map(([Icon, title, copy]) => (
+            {[[ShieldCheck, 'Конструктив', 'Пояснюємо, з чого зведені стіни, як утеплено фасад і що закладено в основі будинку.'], [Search, 'Інженерія', 'Показуємо рішення для електрики, води, опалення та вентиляції до завершення робіт.'], [Sparkles, 'Готовність', 'Фіксуємо комплектацію, строки та наступний етап — без нечітких обіцянок.']].map(([Icon, title, copy]) => (
               <div key={String(title)} className="bg-[#173326] p-7 sm:min-h-64"><Icon className="size-7 text-[#c3a567]" /><h3 className="mt-8 text-2xl">{String(title)}</h3><p className="mt-4 text-sm leading-6 text-white/55">{String(copy)}</p></div>
             ))}
           </div>
@@ -52,12 +52,12 @@ export default async function Home() {
 
       <section className="pd-container py-20 lg:py-28">
         <div className="grid gap-10 lg:grid-cols-[.65fr_1.35fr]">
-          <div><p className="pd-eyebrow">Продані об’єкти</p><h2 className="mt-4 text-4xl leading-tight text-[#173326] sm:text-5xl">Будинки, які вже знайшли покупців</h2><p className="mt-5 max-w-sm leading-7 text-[#647368]">Не прибираємо їх із каталогу: так можна побачити реальні типи будинків, локації та ціновий діапазон наших угод.</p><div className="mt-8 space-y-3 text-sm text-[#52665a]">{['Оцінка ціни на основі ринкових аналогів', 'Фото, характеристики та зрозумілий опис', 'Переговори й перевірка документів'].map((item) => <p key={item} className="flex gap-2"><Check className="size-4 text-[#b99751]" /> {item}</p>)}</div></div>
+          <div><p className="pd-eyebrow">Завершені будинки</p><h2 className="mt-4 text-4xl leading-tight text-[#173326] sm:text-5xl">Проєкти, які вже передали власникам</h2><p className="mt-5 max-w-sm leading-7 text-[#647368]">Залишаємо їх у каталозі, щоб можна було побачити наш масштаб, архітектуру та типові планування.</p><div className="mt-8 space-y-3 text-sm text-[#52665a]">{['Зрозуміла специфікація матеріалів', 'Фіксовані етапи будівництва', 'Передача будинку та документації'].map((item) => <p key={item} className="flex gap-2"><Check className="size-4 text-[#b99751]" /> {item}</p>)}</div></div>
           {sold.length > 0 ? <div className="grid gap-6 sm:grid-cols-2">{sold.map((property) => <PropertyCard key={property.id} property={property} />)}</div> : <DataUnavailable message={soldResult.ok ? 'Опублікованих проданих об’єктів поки немає.' : soldResult.message} />}
         </div>
       </section>
 
-      <section className="bg-[#e8dec9] py-16"><div className="pd-container flex flex-col justify-between gap-8 lg:flex-row lg:items-center"><div><p className="pd-eyebrow">Потрібен інший варіант?</p><h2 className="mt-3 text-4xl text-[#173326] sm:text-5xl">Назвіть бюджет, площу й бажану локацію</h2></div><div className="flex flex-col gap-3 sm:flex-row"><a href="tel:+380671234567" className="inline-flex h-14 items-center justify-center gap-2 bg-[#173326] px-7 text-sm font-semibold text-white"><Phone className="size-4" /> Подзвонити</a><a href="/contacts" className="inline-flex h-14 items-center justify-center border border-[#173326]/25 px-7 text-sm font-semibold text-[#173326]">Залишити заявку</a></div></div></section>
+      <section className="bg-[#e8dec9] py-16"><div className="pd-container flex flex-col justify-between gap-8 lg:flex-row lg:items-center"><div><p className="pd-eyebrow">Своя ділянка?</p><h2 className="mt-3 text-4xl text-[#173326] sm:text-5xl">Обговорімо формат будинку та бюджет будівництва</h2></div><div className="flex flex-col gap-3 sm:flex-row"><a href="tel:+380671234567" className="inline-flex h-14 items-center justify-center gap-2 bg-[#173326] px-7 text-sm font-semibold text-white"><Phone className="size-4" /> Подзвонити</a><a href="/contacts" className="inline-flex h-14 items-center justify-center border border-[#173326]/25 px-7 text-sm font-semibold text-[#173326]">Запланувати розмову</a></div></div></section>
       <SiteFooter />
     </main>
   );

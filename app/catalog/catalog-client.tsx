@@ -26,7 +26,7 @@ export function CatalogClient({ initialItems, unavailableMessage = '' }: { initi
 
   return (
     <section className="min-h-[70vh] bg-[#f6f1e8] py-12 lg:py-20"><div className="pd-container">
-      <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end"><div><p className="pd-eyebrow">Каталог</p><h1 className="mt-4 text-5xl leading-none text-[#173326] sm:text-7xl">Будинки біля Луцька</h1></div><p className="max-w-md text-sm leading-6 text-[#647368]">Актуальні та продані будинки з ціною, площею, ділянкою, статусом і відстанню до Луцька.</p></div>
+      <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end"><div><p className="pd-eyebrow">Наші проєкти</p><h1 className="mt-4 text-5xl leading-none text-[#173326] sm:text-7xl">Будинки, які будуємо біля Луцька</h1></div><p className="max-w-md text-sm leading-6 text-[#647368]">Готові й заплановані будинки з площею, ділянкою, статусом робіт та орієнтовною комплектацією.</p></div>
       <div className="mt-10 border-y border-[#173326]/12 py-5">
         <div className="mb-4 flex items-center justify-between"><span className="flex items-center gap-2 text-sm font-semibold text-[#173326]"><SlidersHorizontal className="size-4" /> Фільтри</span>{active && <Button variant="ghost" size="sm" className="rounded-none text-[#8b413a]" onClick={() => setFilters(initial)}><X className="size-3.5" /> Очистити</Button>}</div>
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
@@ -38,7 +38,7 @@ export function CatalogClient({ initialItems, unavailableMessage = '' }: { initi
         </div>
       </div>
       {unavailableMessage && <div className="mt-8 border border-[#b99751]/35 bg-[#fffdf8] px-5 py-4 text-sm text-[#647368]"><strong className="block text-[#173326]">Каталог тимчасово недоступний</strong><span className="mt-1 block">{unavailableMessage}</span></div>}
-      <div className="mt-8 flex items-center justify-between text-sm text-[#647368]"><p>Знайдено: {filtered.length}</p><p className="hidden sm:block">Спочатку рекомендовані</p></div>
+      <div className="mt-8 flex items-center justify-between text-sm text-[#647368]"><p>Знайдено: {filtered.length}</p><p className="hidden sm:block">Спочатку актуальні проєкти</p></div>
       {filtered.length > 0 ? <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">{filtered.map((property) => <PropertyCard key={property.id} property={property} />)}</div> : <div className="mt-6 grid min-h-80 place-items-center border border-[#173326]/10 bg-white/40 text-center"><div><h2 className="text-3xl text-[#173326]">{unavailableMessage ? 'Об’єкти з’являться після підключення бази' : 'Нічого не знайдено'}</h2><p className="mt-2 text-sm text-[#647368]">{unavailableMessage ? 'Налаштування не впливає на інші сторінки сайту.' : 'Спробуйте змінити один або кілька фільтрів.'}</p>{!unavailableMessage && <Button className="mt-5 rounded-none bg-[#173326]" onClick={() => setFilters(initial)}>Показати всі</Button>}</div></div>}
     </div></section>
   );

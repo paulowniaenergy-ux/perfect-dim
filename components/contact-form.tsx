@@ -16,7 +16,7 @@ export function ContactForm({ propertyTitle }: { propertyTitle?: string }) {
         <div>
           <CheckCircle2 className="mx-auto size-10 text-[#728d55]" />
           <h3 className="mt-4 text-2xl text-[#173326]">Дякуємо за заявку</h3>
-          <p className="mt-2 text-sm leading-6 text-[#617066]">Менеджер Perfect Dim зв’яжеться з вами найближчим часом.</p>
+          <p className="mt-2 text-sm leading-6 text-[#617066]">Команда Perfect Dim зв’яжеться з вами найближчим часом.</p>
           <Button className="mt-5 rounded-none bg-[#173326] px-5 hover:bg-[#254b39]" onClick={() => setSent(false)}>Надіслати ще одну</Button>
         </div>
       </div>
