@@ -50,6 +50,7 @@ export type RepositoryResult<T> =
 const SELECT_WITH_IMAGES = '*, property_images(*)';
 
 function publicImageUrl(baseUrl: string, storagePath: string) {
+  if (storagePath.startsWith('/properties/')) return storagePath;
   const encodedPath = storagePath
     .split('/')
     .map((part) => encodeURIComponent(part))

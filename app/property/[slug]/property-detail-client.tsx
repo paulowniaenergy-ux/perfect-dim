@@ -7,6 +7,7 @@ import { ContactForm } from '@/components/contact-form';
 import { formatPrice, statusLabels, type Property } from '@/lib/property-types';
 
 export function PropertyDetailClient({ property }: { property: Property }) {
+  const isVisualization = property.attributes.source === 'visualization';
   const gallery = property.images.length > 0 ? property.images : [0, 1, 2].map((index) => ({ id: `fallback-${index}`, propertyId: property.id, storagePath: '', url: '/property-hero.png', altText: `${property.title} — фото буде додано`, sortOrder: index, isCover: index === 0, createdAt: '' }));
   const galleryAt = (index: number) => gallery[index] ?? gallery[0];
   const statusTone = property.status === 'sold' ? 'bg-[#9b352d]' : property.status === 'reserved' ? 'bg-[#c3a567] text-[#173326]' : 'bg-[#173326]';
@@ -18,6 +19,7 @@ export function PropertyDetailClient({ property }: { property: Property }) {
           <div className="lg:text-right"><span className={`inline-flex px-4 py-2 text-xs font-bold uppercase tracking-[.15em] text-white ${statusTone}`}>{statusLabels[property.status]}</span><p className="mt-4 text-3xl font-semibold text-[#173326]">{formatPrice(property.price, property.currency)}</p></div>
         </div>
         {property.status === 'sold' && <div className="mb-6 bg-[#8d342d] px-5 py-4 text-center text-sm font-semibold text-white">Цей будинок уже продано. Він залишається на сайті як приклад успішної угоди Perfect Dim.</div>}
+        {isVisualization && <div className="mb-6 border border-[#b99751]/45 bg-[#fff8e9] px-5 py-4 text-sm leading-6 text-[#43594c]"><strong className="text-[#173326]">Візуалізація з орієнтовними параметрами.</strong> Площу, ціну, локацію та конструктивні рішення потрібно підтвердити перед укладенням угоди.</div>}
         <div className="grid gap-3 lg:grid-cols-[1.7fr_1fr]">
           <img src={galleryAt(0).url} alt={galleryAt(0).altText} className="aspect-[16/10] h-full w-full object-cover" />
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-1"><img src={galleryAt(1).url} alt={galleryAt(1).altText} className="h-full min-h-44 w-full object-cover" /><img src={galleryAt(2).url} alt={galleryAt(2).altText} className="h-full min-h-44 w-full object-cover" /></div>

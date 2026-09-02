@@ -12,7 +12,7 @@ export default async function Home() {
   const sold = soldResult.ok ? soldResult.data : [];
   return (
     <main className="min-h-screen bg-[#f6f1e8]">
-      <section className="relative min-h-[760px] overflow-hidden bg-[#173326] bg-cover bg-center text-white" style={{ backgroundImage: "url('/property-hero.png')" }}>
+      <section className="relative min-h-[760px] overflow-hidden bg-[#173326] bg-cover bg-center text-white" style={{ backgroundImage: "url('/perfect-dim-hero-neighborhood.png')" }}>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(12,31,23,.96)_0%,rgba(12,31,23,.67)_45%,rgba(12,31,23,.12)_100%)]" />
         <div className="relative z-10"><SiteHeader inverted /></div>
         <div className="pd-container relative z-10 flex min-h-[660px] items-center pb-16 pt-10">

@@ -9,6 +9,7 @@ const statusClass = {
 
 export function PropertyCard({ property }: { property: Property }) {
   const cover = coverImage(property);
+  const isVisualization = property.attributes.source === 'visualization';
   return (
     <article className="group overflow-hidden bg-[#fffdf8] shadow-[0_16px_50px_rgba(23,51,38,.07)]">
       <a href={`/property/${property.slug}`} className="relative block aspect-[4/3] overflow-hidden bg-[#d8d0c0]">
@@ -20,6 +21,11 @@ export function PropertyCard({ property }: { property: Property }) {
         <span className={`absolute left-4 top-4 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[.15em] ${statusClass[property.status]}`}>
           {statusLabels[property.status]}
         </span>
+        {isVisualization && (
+          <span className="absolute right-4 top-4 bg-white/92 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.14em] text-[#173326]">
+            Візуалізація
+          </span>
+        )}
         {property.status === 'sold' && (
           <span className="absolute inset-x-0 bottom-0 bg-[#7b2e28]/92 px-4 py-3 text-center text-xs font-semibold uppercase tracking-[.18em] text-white">
             Успішно продано Perfect Dim
