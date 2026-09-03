@@ -3,7 +3,6 @@
 import { useState, type SyntheticEvent } from 'react';
 import { ArrowLeft, KeyRound, LogIn, Mail } from 'lucide-react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createClient } from '@/lib/supabase/client';
@@ -122,9 +121,10 @@ export function LoginClient({
                 {message}
               </p>
             )}
-            <Button
+            <button
+              type="submit"
               disabled={pending}
-              className="h-12 rounded-none bg-[#173326] hover:bg-[#254b39]"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-none bg-[#173326] px-4 text-sm font-medium text-white transition-colors hover:bg-[#254b39] disabled:pointer-events-none disabled:opacity-50"
             >
               {mode === 'login' ? (
                 <LogIn className="size-4" />
@@ -138,7 +138,7 @@ export function LoginClient({
                 : mode === 'login'
                   ? 'Увійти'
                   : 'Надіслати посилання'}
-            </Button>
+            </button>
             <button
               type="button"
               disabled={pending}
