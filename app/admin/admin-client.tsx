@@ -158,8 +158,8 @@ export function AdminClient({ initialItems, initialError, adminEmail }: Props) {
         </div>
       </header>
 
-      <div className="mx-auto grid max-w-[1540px] lg:grid-cols-[380px_1fr]">
-        <aside className="border-r border-[#173326]/10 bg-[#f8f4ec] p-5 sm:p-7 lg:min-h-[calc(100vh-80px)]">
+      <div className="mx-auto grid w-full max-w-[1540px] lg:grid-cols-[380px_minmax(0,1fr)]">
+        <aside className="min-w-0 border-r border-[#173326]/10 bg-[#f8f4ec] p-5 sm:p-7 lg:min-h-[calc(100vh-80px)]">
           <div className="flex items-center justify-between"><div><h1 className="text-3xl">Об’єкти</h1><p className="mt-1 text-xs text-[#6e7a72]">Усього: {items.length}</p></div><Button size="icon" aria-label="Додати об’єкт" className="size-11 rounded-none bg-[#c3a567] text-[#173326] hover:bg-[#d2b87f]" onClick={() => { setDraft(blankProperty()); setIsNew(true); setNotice('Створення нового об’єкта.'); }}><Plus /></Button></div>
           <div className="relative mt-5"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#748078]" /><Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Пошук" className="h-11 rounded-none bg-white pl-10" /></div>
           <NativeSelect value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as 'all' | PropertyStatus)} className="mt-3 w-full [&_select]:h-11 [&_select]:w-full [&_select]:rounded-none [&_select]:bg-white"><NativeSelectOption value="all">Усі статуси</NativeSelectOption><NativeSelectOption value="available">Доступні</NativeSelectOption><NativeSelectOption value="reserved">Заброньовані</NativeSelectOption><NativeSelectOption value="sold">Продані</NativeSelectOption></NativeSelect>
@@ -172,13 +172,13 @@ export function AdminClient({ initialItems, initialError, adminEmail }: Props) {
           </div>
         </aside>
 
-        <section className="p-5 sm:p-8 lg:p-12">
-          <div className="mx-auto max-w-5xl">
+        <section className="min-w-0 p-5 sm:p-8 lg:p-12">
+          <div className="mx-auto min-w-0 max-w-5xl">
             <div className="flex flex-col justify-between gap-4 border-b border-[#173326]/10 pb-6 sm:flex-row sm:items-center"><div><p className="pd-eyebrow">{isNew ? 'Новий об’єкт' : draft.slug}</p><h2 className="mt-2 text-4xl">{draft.title || 'Без назви'}</h2></div><div className="flex flex-wrap gap-2"><Button variant="outline" className="rounded-none border-[#173326]/20 bg-transparent" onClick={remove} disabled={isNew || pending}><Trash2 className="size-4" /> Видалити</Button><Button className="rounded-none bg-[#173326] px-5 hover:bg-[#254b39]" onClick={persist} disabled={pending}>{pending ? <LoaderCircle className="size-4 animate-spin" /> : <Save className="size-4" />} Зберегти</Button></div></div>
             {notice && <div className="mt-5 flex items-start gap-2 bg-white px-4 py-3 text-sm text-[#52665a]"><CheckCircle2 className="mt-0.5 size-4 shrink-0 text-[#728d55]" /> {notice}</div>}
 
-            <div className="mt-8 grid gap-8 xl:grid-cols-[1fr_.78fr]">
-              <div className="grid gap-5 bg-[#f8f4ec] p-5 sm:p-7">
+            <div className="mt-8 grid min-w-0 gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(0,.78fr)]">
+              <div className="grid min-w-0 gap-5 bg-[#f8f4ec] p-5 sm:p-7">
                 <h3 className="text-2xl">Основна інформація</h3>
                 <Field label="Назва"><Input value={draft.title} onChange={(event) => update('title', event.target.value)} className="h-11 rounded-none bg-white" /></Field>
                 <Field label="Slug"><Input value={draft.slug} onChange={(event) => update('slug', event.target.value.toLowerCase())} className="h-11 rounded-none bg-white" placeholder="sosnovyi-dim-strumivka" /></Field>
@@ -197,7 +197,7 @@ export function AdminClient({ initialItems, initialError, adminEmail }: Props) {
                 {draft.status === 'sold' && <p className="bg-[#f4ddd8] px-4 py-3 text-sm text-[#7b2e28]">Опублікований проданий об’єкт залишиться в каталозі з позначкою «Продано».</p>}
               </div>
 
-              <div className="h-fit bg-[#f8f4ec] p-5 sm:p-7">
+              <div className="h-fit min-w-0 bg-[#f8f4ec] p-5 sm:p-7">
                 <h3 className="text-2xl">Фото об’єкта</h3><p className="mt-2 text-xs leading-5 text-[#6e7a72]">JPG, PNG, WebP або AVIF до 10 МБ. Фото зберігаються у Supabase Storage, не в GitHub.</p>
                 <label className={`mt-5 flex items-center justify-center gap-2 border border-dashed border-[#173326]/30 bg-white px-5 py-8 text-sm font-semibold ${isNew || pending ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:border-[#b99751]'}`}><ImagePlus className="size-5 text-[#b99751]" /> Завантажити фото<Input type="file" accept="image/jpeg,image/png,image/webp,image/avif" multiple disabled={isNew || pending} className="sr-only" onChange={(event) => { void upload(event.target.files); event.target.value = ''; }} /></label>
                 {isNew && <p className="mt-3 text-xs text-[#8b6750]">Спочатку збережіть основну інформацію.</p>}
