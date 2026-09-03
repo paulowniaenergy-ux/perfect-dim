@@ -2,7 +2,6 @@
 
 import { useState, type SyntheticEvent } from 'react';
 import { ArrowLeft, KeyRound, LogIn, Mail } from 'lucide-react';
-import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createClient } from '@/lib/supabase/client';
@@ -66,12 +65,14 @@ export function LoginClient({
   return (
     <main className="grid min-h-screen place-items-center bg-[#eef0e8] px-5 text-[#173326]">
       <div className="w-full max-w-md bg-[#f8f4ec] p-7 shadow-[0_20px_70px_rgba(23,51,38,.1)] sm:p-10">
-        <Link
+        {/* Native navigation avoids Vinext's failing RSC prefetch on this isolated auth page. */}
+        {/* oxlint-disable-next-line next/no-html-link-for-pages */}
+        <a
           href="/"
           className="inline-flex items-center gap-2 text-sm text-[#647368]"
         >
           <ArrowLeft className="size-4" /> На сайт
-        </Link>
+        </a>
         <p className="pd-eyebrow mt-10">Perfect Dim</p>
         <h1 className="mt-3 text-4xl">
           {mode === 'login' ? 'Вхід до адмінки' : 'Відновлення пароля'}
