@@ -29,6 +29,7 @@ export function PropertyDetailClient({ property }: { property: Property }) {
           <img src={galleryAt(0).url} alt={galleryAt(0).altText} className="aspect-[16/10] h-full w-full object-cover" />
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-1"><img src={galleryAt(1).url} alt={galleryAt(1).altText} className="h-full min-h-44 w-full object-cover" /><img src={galleryAt(2).url} alt={galleryAt(2).altText} className="h-full min-h-44 w-full object-cover" /></div>
         </div>
+        {gallery.length > 3 && <div className="mt-10"><div className="flex items-end justify-between gap-4"><div><p className="pd-eyebrow">Галерея</p><h2 className="mt-3 text-3xl text-[#173326]">Ще фото об’єкта</h2></div><p className="text-sm text-[#647368]">Усього: {gallery.length} фото</p></div><div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{gallery.slice(3).map((image) => <img key={image.id} src={image.url} alt={image.altText} className="aspect-[4/3] w-full object-cover" />)}</div></div>}
       </section>
 
       <section className="pd-container grid gap-12 pb-20 pt-6 lg:grid-cols-[1.35fr_.65fr] lg:pb-28">
