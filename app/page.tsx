@@ -41,12 +41,12 @@ export default async function Home() {
         {featured.length > 0 ? <div className="grid gap-6 lg:grid-cols-3">{featured.map((property) => <PropertyCard key={property.id} property={property} />)}</div> : <DataUnavailable message={featuredResult.ok ? 'Опублікованих рекомендованих об’єктів поки немає.' : featuredResult.message} />}
       </section>
 
-      <section className="bg-[#173326] py-20 text-white lg:py-28">
+      <section className="pd-deep-green-pattern py-20 text-white lg:py-28">
         <div className="pd-container grid gap-14 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
           <div><p className="pd-eyebrow">Підхід Perfect Dim</p><h2 className="mt-5 text-4xl leading-tight sm:text-6xl">Від ділянки до ключів — одна команда</h2><p className="mt-6 max-w-lg leading-7 text-white/62">Починаємо з планування та інженерії, контролюємо ключові етапи будівництва і передаємо будинок із зафіксованою комплектацією.</p><a href="/about" className="mt-8 inline-flex items-center gap-2 border-b border-[#c3a567] pb-2 text-sm font-semibold text-[#d7bd87]">Про підхід <ArrowRight className="size-4" /></a></div>
           <div className="grid gap-px bg-white/12 sm:grid-cols-3">
             {[[ShieldCheck, 'Конструктив', 'Пояснюємо, з чого зведені стіни, як утеплено фасад і що закладено в основі будинку.'], [Search, 'Інженерія', 'Показуємо рішення для електрики, води, опалення та вентиляції до завершення робіт.'], [Sparkles, 'Готовність', 'Фіксуємо комплектацію, строки та наступний етап — без нечітких обіцянок.']].map(([Icon, title, copy]) => (
-              <div key={String(title)} className="bg-[#173326] p-7 sm:min-h-64"><Icon className="size-7 text-[#c3a567]" /><h3 className="mt-8 text-2xl">{String(title)}</h3><p className="mt-4 text-sm leading-6 text-white/55">{String(copy)}</p></div>
+              <div key={String(title)} className="pd-deep-green-pattern-panel p-7 sm:min-h-64"><Icon className="size-7 text-[#c3a567]" /><h3 className="mt-8 text-2xl">{String(title)}</h3><p className="mt-4 text-sm leading-6 text-white/55">{String(copy)}</p></div>
             ))}
           </div>
         </div>

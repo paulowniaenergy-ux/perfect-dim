@@ -89,4 +89,18 @@
 @layer utilities {
   .pd-container { @apply mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-14; }
   .pd-eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.24em] text-[#b99751]; }
+  .pd-deep-green-pattern {
+    background-color: #173326;
+    background-image:
+      linear-gradient(30deg, transparent 49.35%, rgb(215 189 135 / 5%) 50%, transparent 50.65%),
+      linear-gradient(150deg, transparent 49.35%, rgb(215 189 135 / 5%) 50%, transparent 50.65%);
+    background-size: 104px 60px;
+  }
+  .pd-deep-green-pattern-panel {
+    background-color: rgb(23 51 38 / 88%);
+    background-image:
+      linear-gradient(30deg, transparent 49.35%, rgb(215 189 135 / 3%) 50%, transparent 50.65%),
+      linear-gradient(150deg, transparent 49.35%, rgb(215 189 135 / 3%) 50%, transparent 50.65%);
+    background-size: 104px 60px;
+  }
 }
