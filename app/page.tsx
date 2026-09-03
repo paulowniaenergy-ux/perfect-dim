@@ -50,12 +50,12 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="pd-container py-20 lg:py-28">
+      {sold.length > 0 && <section className="pd-container py-20 lg:py-28">
         <div className="grid gap-10 lg:grid-cols-[.65fr_1.35fr]">
           <div><p className="pd-eyebrow">Завершені будинки</p><h2 className="mt-4 text-4xl leading-tight text-[#173326] sm:text-5xl">Проєкти, які вже передали власникам</h2><p className="mt-5 max-w-sm leading-7 text-[#647368]">Залишаємо їх у каталозі, щоб можна було побачити наш масштаб, архітектуру та типові планування.</p><div className="mt-8 space-y-3 text-sm text-[#52665a]">{['Зрозуміла специфікація матеріалів', 'Фіксовані етапи будівництва', 'Передача будинку та документації'].map((item) => <p key={item} className="flex gap-2"><Check className="size-4 text-[#b99751]" /> {item}</p>)}</div></div>
-          {sold.length > 0 ? <div className="grid gap-6 sm:grid-cols-2">{sold.map((property) => <PropertyCard key={property.id} property={property} />)}</div> : <DataUnavailable message={soldResult.ok ? 'Опублікованих проданих об’єктів поки немає.' : soldResult.message} />}
+          <div className="grid gap-6 sm:grid-cols-2">{sold.map((property) => <PropertyCard key={property.id} property={property} />)}</div>
         </div>
-      </section>
+      </section>}
 
       <section className="bg-[#e8dec9] py-16"><div className="pd-container flex flex-col justify-between gap-8 lg:flex-row lg:items-center"><div><p className="pd-eyebrow">Своя ділянка?</p><h2 className="mt-3 text-4xl text-[#173326] sm:text-5xl">Обговорімо формат будинку та бюджет будівництва</h2></div><div className="flex flex-col gap-3 sm:flex-row"><a href="tel:+380671234567" className="inline-flex h-14 items-center justify-center gap-2 bg-[#173326] px-7 text-sm font-semibold text-white"><Phone className="size-4" /> Подзвонити</a><a href="/contacts" className="inline-flex h-14 items-center justify-center border border-[#173326]/25 px-7 text-sm font-semibold text-[#173326]">Запланувати розмову</a></div></div></section>
       <SiteFooter />
