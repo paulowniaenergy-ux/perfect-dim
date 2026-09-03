@@ -1,5 +1,31 @@
 export type PropertyStatus = 'available' | 'reserved' | 'sold';
 
+export const infrastructureOptions = [
+  ['gas', 'Газифікація'],
+  ['electricity', 'Електрика на ділянці'],
+  ['water', 'Вода'],
+  ['sewerage', 'Каналізація'],
+  ['internet', 'Оптичний інтернет'],
+  ['access-road', 'Під’їздна дорога'],
+  ['paving', 'Бруківка навколо будинку'],
+  ['landscaping', 'Облаштування території'],
+  ['fence', 'Огорожа та ворота'],
+  ['outdoor-lighting', 'Вуличне освітлення'],
+  ['drainage', 'Водовідведення'],
+] as const;
+
+export type InfrastructureKey = (typeof infrastructureOptions)[number][0];
+
+export function getInfrastructure(attributes: Record<string, unknown>) {
+  const values = attributes.infrastructure;
+  if (!Array.isArray(values)) return [] as InfrastructureKey[];
+  const allowed = new Set<string>(infrastructureOptions.map(([key]) => key));
+  return values.filter(
+    (value): value is InfrastructureKey =>
+      typeof value === 'string' && allowed.has(value),
+  );
+}
+
 export type PropertyImage = {
   id: string;
   propertyId: string;

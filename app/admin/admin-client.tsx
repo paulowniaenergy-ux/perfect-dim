@@ -33,6 +33,8 @@ import {
 import {
   coverImage,
   formatPrice,
+  getInfrastructure,
+  infrastructureOptions,
   statusLabels,
   type Property,
   type PropertyStatus,
@@ -65,6 +67,18 @@ export function AdminClient({ initialItems, initialError, adminEmail }: Props) {
 
   const update = <K extends keyof Property>(key: K, value: Property[K]) =>
     setDraft((current) => ({ ...current, [key]: value }));
+
+  const toggleInfrastructure = (key: (typeof infrastructureOptions)[number][0]) =>
+    setDraft((current) => {
+      const selected = getInfrastructure(current.attributes);
+      const infrastructure = selected.includes(key)
+        ? selected.filter((item) => item !== key)
+        : [...selected, key];
+      return {
+        ...current,
+        attributes: { ...current.attributes, infrastructure },
+      };
+    });
 
   const applyItems = (next: Property[], selectedId = draft.id) => {
     setItems(next);
@@ -192,6 +206,13 @@ export function AdminClient({ initialItems, initialError, adminEmail }: Props) {
                 <div className="grid gap-4 sm:grid-cols-3"><NumberInput label="Рік побудови" value={draft.year} onChange={(value) => update('year', value)} /><NumberInput label="Широта" value={draft.latitude} step="any" onChange={(value) => update('latitude', value)} /><NumberInput label="Довгота" value={draft.longitude} step="any" onChange={(value) => update('longitude', value)} /></div>
                 <Field label="Опис"><Textarea value={draft.description} onChange={(event) => update('description', event.target.value)} rows={7} className="min-h-40 rounded-none bg-white" /></Field>
                 <Field label="Особливості — одна на рядок"><Textarea value={draft.highlights.join('\n')} onChange={(event) => update('highlights', event.target.value.split('\n').map((value) => value.trim()).filter(Boolean))} rows={5} className="rounded-none bg-white" /></Field>
+                <fieldset className="border border-[#173326]/12 bg-white p-4 sm:p-5">
+                  <legend className="px-1 text-sm font-semibold text-[#173326]">Комунікації та територія</legend>
+                  <p className="mb-4 text-xs leading-5 text-[#6e7a72]">Відмітьте лише те, що фактично є в цьому об’єкті. Пункти будуть показані на сторінці будинку.</p>
+                  <div className="grid gap-x-5 gap-y-3 sm:grid-cols-2">
+                    {infrastructureOptions.map(([key, label]) => <label key={key} className="flex items-center gap-3 text-sm text-[#43594c]"><input type="checkbox" checked={getInfrastructure(draft.attributes).includes(key)} onChange={() => toggleInfrastructure(key)} className="size-4 accent-[#173326]" /> {label}</label>)}
+                  </div>
+                </fieldset>
                 <label className="flex items-center gap-3 text-sm"><input type="checkbox" checked={draft.published} onChange={(event) => update('published', event.target.checked)} className="size-4 accent-[#173326]" /> Опубліковано</label>
                 <label className="flex items-center gap-3 text-sm"><input type="checkbox" checked={draft.featured} onChange={(event) => update('featured', event.target.checked)} className="size-4 accent-[#173326]" /> Показувати у вибраних на головній</label>
                 {draft.status === 'sold' && <p className="bg-[#f4ddd8] px-4 py-3 text-sm text-[#7b2e28]">Опублікований проданий об’єкт залишиться в каталозі з позначкою «Продано».</p>}
