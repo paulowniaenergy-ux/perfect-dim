@@ -24,10 +24,10 @@ export default function AboutPage() {
       <section className="pd-container grid gap-12 py-16 lg:grid-cols-2 lg:items-center lg:py-24">
         <div>
           <p className="pd-eyebrow">Забудовник Perfect Dim</p>
-          <h1 className="mt-5 text-5xl leading-[1.02] text-[#173326] sm:text-7xl">Будуємо будинки, у яких рішення можна побачити до заселення</h1>
-          <p className="mt-7 max-w-xl text-lg leading-8 text-[#5d6e63]">Працюємо з приватними будинками й дуплексами у Луцькому районі: від планування на ділянці до передачі ключів. Пояснюємо комплектацію та фіксуємо етапи робіт.</p>
+          <h1 className="mt-5 text-5xl leading-[1.02] text-[#173326] sm:text-7xl">Спершу продумуємо будинок. Потім — будуємо.</h1>
+          <p className="mt-7 max-w-xl text-lg leading-8 text-[#5d6e63]">Від планування на ділянці до передачі ключів: показуємо конструктив, комплектацію й хід робіт без загальних обіцянок.</p>
         </div>
-        <img src="/property-2.png" alt="Будинок Perfect Dim" className="aspect-[4/3] w-full object-cover" />
+        <img src="/properties/visual-house-04.png" alt="Візуалізація будинку Perfect Dim" className="aspect-[4/3] w-full object-cover" />
       </section>
 
       <section className="bg-[#173326] py-20 text-white">
