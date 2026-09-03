@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { coverImage } from '@/lib/property-types';
-import { getPublishedPropertyBySlug } from '@/lib/properties-repository';
+import { getPublishedProperties, getPublishedPropertyBySlug } from '@/lib/properties-repository';
 import { PropertyDetailClient } from './property-detail-client';
 
 export const dynamic = 'force-dynamic';
@@ -21,10 +21,20 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function PropertyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const result = await getPublishedPropertyBySlug(slug);
+  const [result, catalogResult] = await Promise.all([
+    getPublishedPropertyBySlug(slug),
+    getPublishedProperties(),
+  ]);
   if (!result.ok) return <PropertyUnavailable message={result.message} />;
   if (!result.data) notFound();
-  return <PropertyDetailClient property={result.data} />;
+  const property = result.data;
+  const relatedProperties = catalogResult.ok
+    ? catalogResult.data
+        .filter((item) => item.id !== property.id && item.status !== 'sold')
+        .sort((a, b) => Number(b.location === property.location) - Number(a.location === property.location))
+        .slice(0, 3)
+    : [];
+  return <PropertyDetailClient property={property} relatedProperties={relatedProperties} />;
 }
 
 function PropertyUnavailable({ message }: { message: string }) {
