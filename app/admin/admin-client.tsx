@@ -177,7 +177,7 @@ export function AdminClient({ initialItems, initialError, adminEmail }: Props) {
       <header className="border-b border-white/10 bg-[#173326] text-white">
         <div className="mx-auto flex min-h-20 max-w-[1540px] flex-wrap items-center justify-between gap-4 px-5 py-4 sm:px-8">
           <div><p className="font-heading text-2xl">Perfect Dim</p><p className="text-[10px] uppercase tracking-[.2em] text-white/45">Керування об’єктами</p></div>
-          <div className="flex items-center gap-4 text-sm text-white/65"><span className="hidden sm:inline">{adminEmail}</span><a href="/" className="inline-flex items-center gap-2 hover:text-white"><ArrowLeft className="size-4" /> На сайт</a><button type="button" onClick={logout} className="inline-flex items-center gap-2 hover:text-white"><LogOut className="size-4" /> Вийти</button></div>
+          <div className="flex items-center gap-4 text-sm text-white/65"><span className="hidden sm:inline">{adminEmail}</span><a href="/admin/articles" className="hover:text-white">Статті</a><a href="/" className="inline-flex items-center gap-2 hover:text-white"><ArrowLeft className="size-4" /> На сайт</a><button type="button" onClick={logout} className="inline-flex items-center gap-2 hover:text-white"><LogOut className="size-4" /> Вийти</button></div>
         </div>
       </header>
 

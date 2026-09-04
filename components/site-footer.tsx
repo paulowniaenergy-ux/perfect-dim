@@ -16,6 +16,7 @@ export function SiteFooter() {
         <div className="grid content-start gap-3 text-sm text-white/65">
           <p className="pd-eyebrow mb-2">Навігація</p>
           <a href="/catalog" className="hover:text-white">Каталог</a>
+          <a href="/articles" className="hover:text-white">Статті</a>
           <a href="/about" className="hover:text-white">Про нас</a>
           <a href="/contacts" className="hover:text-white">Контакти</a>
           <a href="/admin" className="hover:text-white">Адмінка</a>

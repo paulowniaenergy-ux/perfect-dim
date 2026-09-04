@@ -1,0 +1,7 @@
+'use client';
+import { createClient } from '@/lib/supabase/client';
+import { mapArticle, type Article } from '@/lib/articles-repository';
+export function blankArticle(): Article { const now = new Date().toISOString(); return { id: crypto.randomUUID(), slug: '', title: '', excerpt: '', content: '', coverImageUrl: null, published: false, publishedAt: null, createdAt: now, updatedAt: now }; }
+export async function saveArticle(article: Article, isNew: boolean) { const client = createClient(); const row = { id: article.id, slug: article.slug.trim(), title: article.title.trim(), excerpt: article.excerpt.trim(), content: article.content.trim(), cover_image_url: article.coverImageUrl?.trim() || null, published: article.published, published_at: article.published ? article.publishedAt ?? new Date().toISOString() : null }; const result = isNew ? await client.from('articles').insert(row) : await client.from('articles').update(row).eq('id', article.id); if (result.error) throw result.error; return fetchAdminArticles(); }
+export async function deleteArticle(article: Article) { const client = createClient(); const { error } = await client.from('articles').delete().eq('id', article.id); if (error) throw error; return fetchAdminArticles(); }
+export async function fetchAdminArticles() { const client = createClient(); const { data, error } = await client.from('articles').select('*').order('updated_at', { ascending: false }); if (error) throw error; return (data ?? []).map((item) => mapArticle(item)); }

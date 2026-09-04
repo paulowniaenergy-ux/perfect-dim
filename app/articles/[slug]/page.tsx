@@ -1,0 +1,6 @@
+import { notFound } from 'next/navigation';
+import { SiteFooter } from '@/components/site-footer';
+import { SiteHeader } from '@/components/site-header';
+import { getPublishedArticleBySlug } from '@/lib/articles-repository';
+export const dynamic = 'force-dynamic';
+export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) { const { slug } = await params; const result = await getPublishedArticleBySlug(slug); if (!result.ok || !result.data) notFound(); const article = result.data; return <main className="min-h-screen bg-[#f6f1e8]"><SiteHeader /><article className="pd-container py-16 lg:py-24"><a href="/articles" className="text-xs font-semibold uppercase tracking-[.15em] text-[#9a783b]">← Усі статті</a><p className="pd-eyebrow mt-8">Журнал Perfect Dim</p><h1 className="mt-4 max-w-4xl text-5xl leading-[.98] text-[#173326] sm:text-7xl">{article.title}</h1><p className="mt-7 max-w-2xl text-lg leading-8 text-[#647368]">{article.excerpt}</p>{article.coverImageUrl && <img src={article.coverImageUrl} alt="" className="mt-12 aspect-[16/8] w-full object-cover" />}<div className="mt-12 max-w-3xl whitespace-pre-line text-base leading-8 text-[#43594c]">{article.content}</div></article><SiteFooter /></main>; }
