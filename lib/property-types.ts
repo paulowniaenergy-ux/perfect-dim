@@ -29,7 +29,7 @@ export function getInfrastructure(attributes: Record<string, unknown>) {
 export type PropertyVideo = {
   url: string;
   platform: 'instagram' | 'tiktok' | 'facebook';
-  embedUrl: string;
+  embedUrl: string | null;
 };
 
 export function getPropertyVideos(attributes: Record<string, unknown>) {
@@ -52,6 +52,9 @@ export function getPropertyVideos(attributes: Record<string, unknown>) {
       if (host === 'tiktok.com') {
         const match = parsed.pathname.match(/\/video\/(\d+)/i);
         return match ? [{ url, platform: 'tiktok' as const, embedUrl: `https://www.tiktok.com/embed/v2/${match[1]}` }] : [];
+      }
+      if (host === 'vt.tiktok.com' || host === 'vm.tiktok.com') {
+        return [{ url, platform: 'tiktok' as const, embedUrl: null }];
       }
       if (host === 'facebook.com' || host.endsWith('.facebook.com') || host === 'fb.watch') {
         return [{ url, platform: 'facebook' as const, embedUrl: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=560` }];

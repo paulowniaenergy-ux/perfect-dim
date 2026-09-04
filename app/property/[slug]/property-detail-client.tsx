@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BedDouble, Check, ChevronLeft, ChevronRight, LandPlot, MapPin, Maximize2, MessageCircle, Phone, Send, X } from 'lucide-react';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
@@ -10,9 +10,19 @@ import { formatPrice, getInfrastructure, getPropertyVideos, infrastructureOption
 
 export function PropertyDetailClient({ property, relatedProperties = [] }: { property: Property; relatedProperties?: Property[] }) {
   const [openImageIndex, setOpenImageIndex] = useState<number | null>(null);
+  const [shortTikTokEmbeds, setShortTikTokEmbeds] = useState<Record<string, string>>({});
   const isVisualization = property.attributes.source === 'visualization';
   const infrastructure = getInfrastructure(property.attributes);
   const videos = getPropertyVideos(property.attributes);
+  useEffect(() => {
+    const pending = videos.filter((video) => video.platform === 'tiktok' && !video.embedUrl && !shortTikTokEmbeds[video.url]);
+    pending.forEach((video) => {
+      fetch(`/api/tiktok-embed?url=${encodeURIComponent(video.url)}`)
+        .then((response) => response.ok ? response.json() as Promise<{ embedUrl?: string }> : null)
+        .then((data) => { if (data?.embedUrl) setShortTikTokEmbeds((current) => ({ ...current, [video.url]: data.embedUrl! })); })
+        .catch(() => undefined);
+    });
+  }, [videos, shortTikTokEmbeds]);
   const infrastructureLabels = infrastructure.flatMap((key) => {
     const label = infrastructureOptions.find(([option]) => option === key)?.[1];
     return label ? [label] : [];
@@ -37,7 +47,7 @@ export function PropertyDetailClient({ property, relatedProperties = [] }: { pro
         {gallery.length > 3 && <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{gallery.slice(3).map((image, index) => <button key={image.id} type="button" onClick={() => openImage(index + 3)} className="group relative block overflow-hidden text-left"><img src={image.url} alt={image.altText} className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-[1.03]" /><span className="absolute bottom-3 right-3 bg-[#173326]/85 px-2 py-1.5 text-[10px] font-semibold text-white opacity-0 transition group-hover:opacity-100">Відкрити</span></button>)}</div>}
       </section>
 
-      {videos.length > 0 && <section className="border-y border-[#173326]/10 bg-[#e8dec9] py-14 lg:py-20"><div className="pd-container"><p className="pd-eyebrow">Відео з об’єкта</p><h2 className="mt-3 max-w-2xl text-4xl text-[#173326]">Дивіться будинок у русі</h2><div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">{videos.map((video) => <div key={video.url} className="overflow-hidden bg-[#173326] shadow-[0_18px_42px_rgba(23,51,38,.12)]"><iframe src={video.embedUrl} title={`${property.title} — відео ${video.platform}`} className="aspect-[9/16] w-full border-0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" /><a href={video.url} target="_blank" rel="noreferrer" className="block px-4 py-3 text-xs font-semibold text-white/80 transition hover:text-white">Відкрити у {video.platform === 'instagram' ? 'Instagram' : video.platform === 'tiktok' ? 'TikTok' : 'Facebook'} ↗</a></div>)}</div></div></section>}
+      {videos.length > 0 && <section className="border-y border-[#173326]/10 bg-[#e8dec9] py-14 lg:py-20"><div className="pd-container"><p className="pd-eyebrow">Відео з об’єкта</p><h2 className="mt-3 max-w-2xl text-4xl text-[#173326]">Дивіться будинок у русі</h2><div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">{videos.map((video) => { const embedUrl = video.embedUrl ?? shortTikTokEmbeds[video.url]; return <div key={video.url} className="overflow-hidden bg-[#173326] shadow-[0_18px_42px_rgba(23,51,38,.12)]">{embedUrl ? <iframe src={embedUrl} title={`${property.title} — відео ${video.platform}`} className="aspect-[9/16] w-full border-0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" /> : <div className="grid aspect-[9/16] place-items-center p-6 text-center text-sm text-white/70">Завантажуємо відео TikTok…</div>}<a href={video.url} target="_blank" rel="noreferrer" className="block px-4 py-3 text-xs font-semibold text-white/80 transition hover:text-white">Відкрити у {video.platform === 'instagram' ? 'Instagram' : video.platform === 'tiktok' ? 'TikTok' : 'Facebook'} ↗</a></div>; })}</div></div></section>}
 
       <section className="pd-container grid gap-12 pb-20 pt-6 lg:grid-cols-[1.35fr_.65fr] lg:pb-28">
         <div>
