@@ -85,7 +85,7 @@ export function AdminClient({ initialItems, initialError, adminEmail }: Props) {
       ...current,
       attributes: {
         ...current.attributes,
-        videoUrls: value.split(/\s+/).map((item) => item.trim()).filter(Boolean),
+        videoUrls: [value],
       },
     }));
 
@@ -222,7 +222,7 @@ export function AdminClient({ initialItems, initialError, adminEmail }: Props) {
                     {infrastructureOptions.map(([key, label]) => <label key={key} className="flex items-center gap-3 text-sm text-[#43594c]"><input type="checkbox" checked={getInfrastructure(draft.attributes).includes(key)} onChange={() => toggleInfrastructure(key)} className="size-4 accent-[#173326]" /> {label}</label>)}
                   </div>
                 </fieldset>
-                <Field label="Відео — одне посилання на рядок"><Textarea value={Array.isArray(draft.attributes.videoUrls) ? draft.attributes.videoUrls.filter((item): item is string => typeof item === 'string').join('\n') : ''} onKeyDown={(event) => event.stopPropagation()} onChange={(event) => updateVideoUrls(event.target.value)} rows={5} className="rounded-none bg-white" placeholder={'https://www.instagram.com/reel/...\nhttps://www.tiktok.com/@.../video/...\nhttps://www.facebook.com/reel/...'} /><p className="text-xs leading-5 text-[#6e7a72]">Можна вставляти посилання через Enter, пробіл або з нового рядка. Підтримуються також короткі TikTok-посилання vt.tiktok.com.</p></Field>
+                <Field label="Відео — одне посилання на рядок"><Textarea value={Array.isArray(draft.attributes.videoUrls) ? draft.attributes.videoUrls.filter((item): item is string => typeof item === 'string').join('\n') : ''} onChange={(event) => updateVideoUrls(event.target.value)} rows={5} className="rounded-none bg-white" placeholder={'https://www.instagram.com/reel/...\nhttps://www.tiktok.com/@.../video/...\nhttps://www.facebook.com/reel/...'} /><p className="text-xs leading-5 text-[#6e7a72]">Посилання можна розділяти Enter або пробілами. Підтримуються також короткі TikTok-посилання vt.tiktok.com.</p></Field>
                 <label className="flex items-center gap-3 text-sm"><input type="checkbox" checked={draft.published} onChange={(event) => update('published', event.target.checked)} className="size-4 accent-[#173326]" /> Опубліковано</label>
                 <label className="flex items-center gap-3 text-sm"><input type="checkbox" checked={draft.featured} onChange={(event) => update('featured', event.target.checked)} className="size-4 accent-[#173326]" /> Показувати у вибраних на головній</label>
                 {draft.status === 'sold' && <p className="bg-[#f4ddd8] px-4 py-3 text-sm text-[#7b2e28]">Опублікований проданий об’єкт залишиться в каталозі з позначкою «Продано».</p>}

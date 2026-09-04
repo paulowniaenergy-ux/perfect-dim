@@ -36,8 +36,8 @@ export function getPropertyVideos(attributes: Record<string, unknown>) {
   const values = attributes.videoUrls;
   if (!Array.isArray(values)) return [] as PropertyVideo[];
 
-  const videos = values.flatMap<PropertyVideo>((value): PropertyVideo[] => {
-    if (typeof value !== 'string') return [];
+  const urls = values.flatMap((value) => typeof value === 'string' ? value.split(/\s+/) : []);
+  const videos = urls.flatMap<PropertyVideo>((value): PropertyVideo[] => {
     const url = value.trim();
     if (!url) return [];
     try {
