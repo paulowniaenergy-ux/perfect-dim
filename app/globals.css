@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 @import 'tailwindcss/index.css';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
@@ -34,8 +35,8 @@
 }
 
 :root {
-  --font-body: "Segoe UI Variable", "Aptos", "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Aptos Display", "Segoe UI Variable", Arial, sans-serif;
+  --font-body: "Manrope", "Segoe UI Variable", Arial, sans-serif;
+  --font-display: "Manrope", "Segoe UI Variable", Arial, sans-serif;
   --background: oklch(0.973 0.012 84);
   --foreground: oklch(0.215 0.025 151);
   --card: oklch(0.994 0.006 84);

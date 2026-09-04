@@ -20,7 +20,7 @@ export default async function Home() {
         <div className="pd-container relative z-10 flex min-h-[660px] items-center pb-16 pt-10">
           <div className="max-w-[760px]">
             <p className="pd-eyebrow mb-7">Забудовник · Луцький район</p>
-            <h1 className="max-w-[720px] text-5xl leading-[.98] tracking-[-0.035em] sm:text-7xl lg:text-[96px]">Будинки, у яких важлива не лише фасадна лінія</h1>
+            <h1 className="max-w-[720px] text-5xl font-semibold leading-[.98] tracking-[-0.05em] sm:text-7xl lg:text-[96px]">Будинки під ключ</h1>
             <p className="mt-8 max-w-[570px] text-base leading-7 text-white/72 sm:text-lg">Проєктуємо, будуємо й показуємо комплектацію без дрібного шрифту: конструктив, утеплення, комунікації та готовність кожного будинку.</p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <a href="/catalog" className="inline-flex h-14 items-center justify-center gap-3 bg-[#c3a567] px-7 text-sm font-semibold text-[#173326] transition hover:bg-[#d4ba82]">Перейти до каталогу <ArrowRight className="size-4" /></a>
