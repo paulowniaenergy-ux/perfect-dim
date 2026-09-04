@@ -26,6 +26,45 @@ export function getInfrastructure(attributes: Record<string, unknown>) {
   );
 }
 
+export type PropertyVideo = {
+  url: string;
+  platform: 'instagram' | 'tiktok' | 'facebook';
+  embedUrl: string;
+};
+
+export function getPropertyVideos(attributes: Record<string, unknown>) {
+  const values = attributes.videoUrls;
+  if (!Array.isArray(values)) return [] as PropertyVideo[];
+
+  const videos = values.flatMap((value) => {
+    if (typeof value !== 'string') return [];
+    const url = value.trim();
+    if (!url) return [];
+    try {
+      const parsed = new URL(url);
+      if (parsed.protocol !== 'https:') return [];
+      const host = parsed.hostname.replace(/^www\./, '').toLowerCase();
+
+      if (host === 'instagram.com') {
+        const match = parsed.pathname.match(/^\/(?:reel|p)\/([^/?#]+)/i);
+        return match ? [{ url, platform: 'instagram' as const, embedUrl: `https://www.instagram.com/${parsed.pathname.split('/')[1]}/${match[1]}/embed/` }] : [];
+      }
+      if (host === 'tiktok.com') {
+        const match = parsed.pathname.match(/\/video\/(\d+)/i);
+        return match ? [{ url, platform: 'tiktok' as const, embedUrl: `https://www.tiktok.com/embed/v2/${match[1]}` }] : [];
+      }
+      if (host === 'facebook.com' || host.endsWith('.facebook.com') || host === 'fb.watch') {
+        return [{ url, platform: 'facebook' as const, embedUrl: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=560` }];
+      }
+    } catch {
+      // Invalid and unsupported links are ignored rather than being rendered.
+    }
+    return [];
+  });
+
+  return videos.filter((video, index, all) => all.findIndex((item) => item.url === video.url) === index);
+}
+
 export type PropertyImage = {
   id: string;
   propertyId: string;
